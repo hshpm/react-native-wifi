@@ -183,7 +183,12 @@ public class RNWifiModule extends ReactContextBaseJavaModule {
 		for (ScanResult result: results) {
 			String resultString = "" + result.SSID;
 			if (ssid.equals(resultString)) {
-				connected = connectTo(result, password, ssid);
+				if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
+					connected = connectTo(result, password, "\"" + ssid + "\"");
+				}
+				else {
+					connected = connectTo(result, password, ssid);
+				}
 			}
 		}
 		if (connected) {
